@@ -1,3 +1,4 @@
+const passwordRoutes = require("./routes/passwordRoutes");
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
@@ -31,6 +32,7 @@ app.get("/health", (req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/test", testRoutes);
+app.use("/api/password", passwordRoutes);
 
 const PORT = process.env.PORT || 5050;
 

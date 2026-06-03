@@ -1,6 +1,7 @@
 import { useState } from "react";
 import "./login.css";
 import { FaEnvelope, FaLock } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -99,7 +100,7 @@ const Login = () => {
           <label>
             <input type="checkbox" /> Remember me
           </label>
-          <a href="#">Forgot Password?</a>
+          <Link className="forgot-link" to="/forgot-password">Forgot Password?</Link>
         </div>
 
         <button type="submit" className="login-btn">

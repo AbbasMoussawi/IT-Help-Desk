@@ -19,3 +19,14 @@ CREATE TABLE "user" (
     "CreatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     "UpdatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+-- Table verify_code
+CREATE TABLE verify_code (
+    "ID" SERIAL PRIMARY KEY,
+    "Email" VARCHAR(255) NOT NULL,
+    "Code" VARCHAR(6) NOT NULL,
+    "ExpiresAt" TIMESTAMP NOT NULL,
+    "IsUsed" BOOLEAN DEFAULT FALSE,
+    "CreatedAt" TIMESTAMP DEFAULT NOW()
+);

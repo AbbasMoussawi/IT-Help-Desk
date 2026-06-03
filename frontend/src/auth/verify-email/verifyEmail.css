@@ -1,0 +1,140 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.verify-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+
+.verify-box {
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  background: linear-gradient(180deg, #a8c7ff, #eef3ff);
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.verify-box h2 {
+  font-size: 28px;
+  color: #0a1f44;
+  margin-bottom: 10px;
+}
+
+
+.subtitle {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 25px;
+  line-height: 1.5;
+}
+.email-box {
+  padding: 12px 15px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: #444;
+}
+
+.email-box p {
+  margin-top: 5px;
+  font-weight: bold;
+  color: #001f5c;
+  word-break: break-all;
+  font-size: 16px;
+}
+
+.message {
+  width: 100%;
+  border-radius: 8px;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.message.error {
+  color: #ed3b28;
+  font-size: 16px;
+}
+.code-inputs {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.code-inputs input {
+  width: 50px;
+  height: 55px;
+  text-align: center;
+  font-size: 22px;
+  border: 2px solid #0a1f44;
+  border-radius: 8px;
+  outline: none;
+  background: white;
+  transition: 0.2s;
+}
+
+.code-inputs input:focus {
+  border-color: #1e63ff;
+  transform: scale(1.05);
+}
+
+
+.resend {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.resend span {
+  color: #001f5c;
+  font-weight: bold;
+}
+
+.verify-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #001f5c;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 10px 40px rgb(168, 167, 167);
+  transition: 0.3s;
+}
+
+.verify-btn:hover {
+  box-shadow: none;
+  background: #0033a0;
+}
+
+
+@media (max-width: 480px) {
+  .code-inputs input {
+    width: 40px;
+    height: 45px;
+    font-size: 18px;
+  }
+
+  .verify-box h2 {
+    font-size: 22px;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .verify-box {
+    max-width: 90%;
+  }
+}

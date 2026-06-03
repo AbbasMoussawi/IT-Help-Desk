@@ -7,14 +7,11 @@ async function createTestUsers() {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await pool.query(
-      `
-      INSERT INTO "user" 
+    `
+      INSERT INTO "user"
       ("FullName", "Email", "PasswordHash", "RoleId", "IsActive")
       VALUES
-      ('Admin User', 'admin@test.com', $1, 1, true),
-      ('Manager User', 'manager@test.com', $1, 2, true),
-      ('Employee User', 'employee@test.com', $1, 3, true)
-      ON CONFLICT ("Email") DO NOTHING;
+      ('Abbas', 'abbas.mswi.143@gmail.com', $1, 1, true)
       `,
       [hashedPassword]
     );
