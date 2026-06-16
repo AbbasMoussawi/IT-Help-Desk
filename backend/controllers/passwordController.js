@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const pool = require("../config/db");
 
-/* FORGOT PASSWORD */
+
 const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -59,7 +59,7 @@ const forgotPassword = async (req, res) => {
   }
 };
 
-/* VERIFY CODE */
+
 const verifyCode = async (req, res) => {
   try {
     const { email, code } = req.body;
@@ -112,7 +112,6 @@ const verifyCode = async (req, res) => {
   }
 };
 
-/* RESET PASSWORD */
 const resetPassword = async (req, res) => {
   try {
     const { resetToken, newPassword } = req.body;

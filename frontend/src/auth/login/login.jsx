@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./login.css";
 import { FaEnvelope, FaLock } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -11,15 +11,17 @@ const Login = () => {
   const [passwordError, setPasswordError] = useState("");
   const [serverError, setServerError] = useState("");
 
+  const navigate = useNavigate();
+
   const handleLogin = async (e) => {
     e.preventDefault();
+
     setEmailError("");
     setPasswordError("");
     setServerError("");
 
     let hasError = false;
 
-    
     if (!email) {
       setEmailError("Please fill email");
       hasError = true;
@@ -43,18 +45,34 @@ const Login = () => {
 
       const data = await res.json();
 
+      console.log("LOGIN RESPONSE:", data);
+
       if (!res.ok) {
         setServerError(data.message || "Invalid email or password");
         return;
       }
 
+      
       localStorage.setItem("token", data.token);
-      localStorage.setItem("role", data.user.role);
-      localStorage.setItem("name", data.user.fullName);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
       
-      window.location.href = "/dashboard";
+      const role = data.user.role?.trim().toLowerCase();
 
+      console.log("ROLE:", role);
+
+      if (role === "employee") {
+        navigate("/my-tickets");
+      } 
+      else if (role === "it support") {
+        navigate("/assigned-tickets");
+      } 
+      else if (role === "admin" || role === "manager") {
+        navigate("/ticket-management");
+      } 
+      else {
+        setServerError("Invalid role");
+      }
     } catch (err) {
       console.log(err);
       setServerError("Server not reachable");
@@ -67,8 +85,8 @@ const Login = () => {
         <h2>User Login</h2>
 
         {/* EMAIL */}
-        <div className="input-group">
-          <FaEnvelope className="icon" />
+        <div className="login-input-group">
+          <FaEnvelope className="login-icon" />
           <input
             type="email"
             placeholder="Email ID"
@@ -79,11 +97,11 @@ const Login = () => {
             }}
           />
         </div>
-        {emailError && <p className="error">{emailError}</p>}
+        {emailError && <p className="login-error">{emailError}</p>}
 
-        {}
-        <div className="input-group">
-          <FaLock className="icon" />
+        {/* PASSWORD */}
+        <div className="login-input-group">
+          <FaLock className="login-icon" />
           <input
             type="password"
             placeholder="Password"
@@ -94,20 +112,23 @@ const Login = () => {
             }}
           />
         </div>
-        {passwordError && <p className="error">{passwordError}</p>}
+        {passwordError && <p className="login-error">{passwordError}</p>}
 
         <div className="options">
           <label>
             <input type="checkbox" /> Remember me
           </label>
-          <Link className="forgot-link" to="/forgot-password">Forgot Password?</Link>
+
+          <Link className="forgot-link" to="/forgot-password">
+            Forgot Password?
+          </Link>
         </div>
 
         <button type="submit" className="login-btn">
           LOGIN
         </button>
 
-        {serverError && <p className="error">{serverError}</p>}
+        {serverError && <p className="login-error">{serverError}</p>}
       </form>
     </div>
   );

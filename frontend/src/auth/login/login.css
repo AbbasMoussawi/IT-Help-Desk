@@ -15,19 +15,26 @@
 }
 
 .login-box {
-  width: 360px;
+  width: 100%;
+  max-width: 450px;
+  padding: 40px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   text-align: center;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
   animation: fadeIn 0.8s ease-in-out;
 }
 
 .login-box h2 {
     font-size: 30px;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
     color: #2e3a59;
     letter-spacing: 2px;
 }
 
-.error {
+.login-error {
   color: red;
   font-size: 15px;
   margin: 5px 0 0 2px;
@@ -38,7 +45,7 @@
 
 }
 
-.input-group {
+.login-input-group {
   display: flex;
   align-items: center;
   border-bottom: 1px solid #aaa;
@@ -47,22 +54,30 @@
   transition: 0.3s;
 }
 
-.input-group:focus-within {
+.login-input-group:focus-within {
   border-color: #0d2a5c;
+  padding: 15px 0px;
 }
 
-.icon {
+.login-icon {
   margin-right: 10px;
   color: #2e3a59;
 }
+.login-input-group:focus-within .login-icon {
+  color: #0d2a5c;
+}
 
-.input-group input {
+.login-input-group input {
   border: none;
   outline: none;
   background: transparent;
   width: 100%;
-  font-size: 14px;
+  font-size: 15px;
   color: #051b54;
+  
+}
+.login-input-group input:focus::placeholder{
+  color: rgb(147, 147, 147);
 }
 
 .options {
@@ -162,13 +177,7 @@ input, button {
 
 
 @media (max-width: 400px) {
-  .login-box {
-    max-width: 300px;
-  }
-
-  .login-box h2 {
-    font-size: 18px;
-  }
+  
 
   .input-group input {
     font-size: 13px;
@@ -184,40 +193,24 @@ input, button {
     padding: 15px;
   }
 
-  .login-box {
-    max-width: 320px;
-  }
 }
 
 @media (min-width: 577px) and (max-width: 768px) {
-  .login-box {
-    max-width: 400px;
-  }
 
   .login-box h2 {
     font-size: 24px;
   }
 }
 @media (min-width: 769px) and (max-width: 1024px) {
-  .login-box {
-    max-width: 420px;
-  }
+
 
   .login-container {
     padding: 30px;
   }
 }
 
-@media (min-width: 1025px) and (max-width: 1440px) {
-  .login-box {
-    max-width: 360px;
-  }
-}
 
 @media (min-width: 1441px) {
-  .login-box {
-    max-width: 400px;
-  }
 
   .login-box h2 {
     font-size: 28px;

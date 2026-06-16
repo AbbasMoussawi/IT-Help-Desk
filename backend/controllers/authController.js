@@ -1,6 +1,8 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const pool = require("../config/db");
+
+
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -11,6 +13,7 @@ const login = async (req, res) => {
       });
     }
 
+    
     const result = await pool.query(
       `
       SELECT 
@@ -19,6 +22,7 @@ const login = async (req, res) => {
         u."Email",
         u."PasswordHash",
         u."IsActive",
+        u."IsOnline",
         r."RoleName"
       FROM "user" u
       INNER JOIN role r ON u."RoleId" = r."ID"
@@ -35,12 +39,12 @@ const login = async (req, res) => {
 
     const user = result.rows[0];
 
+    
     if (!user.IsActive) {
       return res.status(403).json({
         message: "Account is disabled",
       });
     }
-
     const isPasswordCorrect = await bcrypt.compare(
       password,
       user.PasswordHash
@@ -51,7 +55,12 @@ const login = async (req, res) => {
         message: "Invalid email or password",
       });
     }
+    await pool.query(
+      `UPDATE "user" SET "IsOnline" = true WHERE "ID" = $1`,
+      [user.ID]
+    );
 
+    
     const token = jwt.sign(
       {
         userId: user.ID,
@@ -71,6 +80,7 @@ const login = async (req, res) => {
         fullName: user.FullName,
         email: user.Email,
         role: user.RoleName,
+        isOnline: true,
       },
     });
 
@@ -91,9 +101,10 @@ const getMe = async (req, res) => {
         u."FullName",
         u."Email",
         u."IsActive",
+        u."IsOnline",
         r."RoleName"
       FROM "user" u
-      INNER JOIN role r ON u."RoleId" = r."Id"
+      INNER JOIN role r ON u."RoleId" = r."ID"
       WHERE u."ID" = $1
       `,
       [req.user.userId]
@@ -112,8 +123,9 @@ const getMe = async (req, res) => {
         id: user.ID,
         fullName: user.FullName,
         email: user.Email,
-        role: user.RoleName,
+        role: user.RoleName || "No role",
         isActive: user.IsActive,
+        isOnline: user.IsOnline,
       },
     });
 
@@ -125,7 +137,27 @@ const getMe = async (req, res) => {
   }
 };
 
+const logout = async (req, res) => {
+  try {
+    await pool.query(
+      `UPDATE "user" SET "IsOnline" = false WHERE "ID" = $1`,
+      [req.user.userId]
+    );
+
+    return res.status(200).json({
+      message: "Logged out successfully",
+    });
+
+  } catch (error) {
+    console.error("Logout error:", error);
+    return res.status(500).json({
+      message: "Server error",
+    });
+  }
+};
+
 module.exports = {
   login,
   getMe,
+  logout,
 };

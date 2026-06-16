@@ -11,7 +11,7 @@ async function createTestUsers() {
       INSERT INTO "user"
       ("FullName", "Email", "PasswordHash", "RoleId", "IsActive")
       VALUES
-      ('Abbas', 'abbas.mswi.143@gmail.com', $1, 1, true)
+      ('IT Staff', 'itstaff@test.com', $1, 2, true)
       `,
       [hashedPassword]
     );

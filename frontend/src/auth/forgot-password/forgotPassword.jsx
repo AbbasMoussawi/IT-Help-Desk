@@ -36,7 +36,6 @@ const ForgotPassword = () => {
         return;
       }
 
-      // نجاح → روح على verify email
       navigate("/verify-email", {
         state: { email },
       });

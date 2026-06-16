@@ -11,6 +11,8 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
+  background: linear-gradient(180deg, #8fa9d1 0%, #e6eaf3 100%);
+  transition: .3s ease all;
 }
 
 
@@ -20,8 +22,9 @@
   text-align: center;
   background: linear-gradient(180deg, #a8c7ff, #eef3ff);
   padding: 40px 30px;
-  border-radius: 16px;
+  border-radius: 20px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  transition: .3s ease all;
 }
 
 .verify-box h2 {
@@ -59,11 +62,13 @@
   text-align: center;
   font-size: 16px;
   font-weight: 600;
+  transition: .3s ease all;
 }
 
 .message.error {
   color: #ed3b28;
   font-size: 16px;
+  transition: .3s ease all;
 }
 .code-inputs {
   display: flex;
