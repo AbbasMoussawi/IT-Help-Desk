@@ -96,6 +96,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/edit-ticket/:id"
+              element={
+                <ProtectedRoute allowedRoles={["Admin", "Manager"]}>
+                  <CreateTicket />
+                </ProtectedRoute>
+              }
+            />
 
             <Route
               path="/dashboard"

@@ -255,7 +255,7 @@ function MyTickets() {
                 setCategory("All");
               }}
             >
-              Clear
+              Clear Filtres
             </button>
 
           </div>
