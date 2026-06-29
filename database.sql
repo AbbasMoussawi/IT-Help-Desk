@@ -151,3 +151,20 @@ CREATE TABLE ticket_activity(
         ON UPDATE NO ACTION
         ON DELETE CASCADE
 )
+
+-- Table notification
+CREATE TABLE IF NOT EXISTS public.notification
+(
+    "ID" integer NOT NULL DEFAULT nextval('"notification_ID_seq"'::regclass),
+    "UserId" integer,
+    "Title" character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    "Message" text COLLATE pg_catalog."default",
+    "Type" character varying(50) COLLATE pg_catalog."default",
+    "IsRead" boolean DEFAULT false,
+    "CreatedAt" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT notification_pkey PRIMARY KEY ("ID"),
+    CONSTRAINT "notification_UserId_fkey" FOREIGN KEY ("UserId")
+        REFERENCES public."user" ("ID") MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+)
