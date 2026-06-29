@@ -12,6 +12,11 @@ import {
   FaUser,
   FaCalendar,
   FaPaperclip,
+  FaInbox,
+  FaFolderOpen,
+  FaSpinner,
+  FaCheckCircle,
+  FaTimesCircle,
 } from "react-icons/fa";
 
 function TicketList({ statusFilter }) {
@@ -152,6 +157,18 @@ function TicketList({ statusFilter }) {
 
     window.URL.revokeObjectURL(url);
   };
+  const pageConfig =
+    statusFilter === "Open"
+      ? { title: "Tickets Open", icon: FaFolderOpen }
+      : statusFilter === "In Progress"
+      ? { title: "Tickets In Progress", icon: FaSpinner }
+      : statusFilter === "Resolved"
+      ? { title: "Tickets Resolved", icon: FaCheckCircle }
+      : statusFilter === "Closed"
+      ? { title: "Tickets Closed", icon: FaTimesCircle }
+      : { title: "All Tickets", icon: FaInbox };
+
+  const { title: pageTitle, icon: PageIcon } = pageConfig;
 
   return (
     <div className="ticket-list-layout">
@@ -160,7 +177,7 @@ function TicketList({ statusFilter }) {
 
       <div className="ticket-list-main">
 
-        <TopBar setIsOpen={setIsOpen} />
+        <TopBar setIsOpen={setIsOpen}  title={pageTitle} icon={PageIcon}/>
 
         <div className="ticket-list-page">
 

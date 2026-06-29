@@ -10,7 +10,7 @@ import {
   FaPaperclip,
 } from "react-icons/fa";
 import { useRef } from "react";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaPlusCircle  } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 function CreateTicket() {
@@ -222,7 +222,7 @@ console.log("ALLOWED =", allowedStatuses);
             setIsOpen={setIsOpen}
             showSearch={false}
             title="New Ticket"
-            icon={FaPlus}
+            icon={FaPlusCircle }
         />
 
         <div className="page-header">

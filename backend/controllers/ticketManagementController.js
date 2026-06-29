@@ -1,5 +1,5 @@
 const pool = require("../config/db");
-
+const { createNotification, notifyTicketUsers } = require("./notificationController");
 const getAllTickets = async (req, res) => {
   try {
     const result = await pool.query(`
@@ -9,41 +9,45 @@ const getAllTickets = async (req, res) => {
         t."Title",
         t."Description",
         t."CreatedAt",
+        t."AssignedToUserId",
 
         s."StatusName",
         p."PriorityName",
         c."CategoryName",
-
+        creator."ID" AS "CreatedByUserId",
         creator."FullName" AS "CreatedByName",
         creator_role."RoleName" AS "CreatedByRole",
-
+        creator."Image" AS "CreatedByImage",
+        assignee."ID" AS "AssignedToUserId",
         assignee."FullName" AS "AssignedToName",
-        assignee_role."RoleName" AS "AssignedToRole"
+        assignee_role."RoleName" AS "AssignedToRole",
+        assignee."Image" AS "AssignedToImage"
 
-        FROM ticket t 
+      FROM ticket t
 
-        LEFT JOIN status s
+      LEFT JOIN status s
         ON t."StatusId" = s."ID"
 
-        LEFT JOIN priority p
+      LEFT JOIN priority p
         ON t."PriorityId" = p."ID"
 
-        LEFT JOIN category c
+      LEFT JOIN category c
         ON t."CategoryId" = c."ID"
 
-        LEFT JOIN "user" creator
+      LEFT JOIN "user" creator
         ON t."CreatedByUserId" = creator."ID"
 
-        LEFT JOIN role creator_role
+      LEFT JOIN role creator_role
         ON creator."RoleId" = creator_role."ID"
 
-        LEFT JOIN "user" assignee
+      LEFT JOIN "user" assignee
         ON t."AssignedToUserId" = assignee."ID"
 
-        LEFT JOIN role assignee_role
+      LEFT JOIN role assignee_role
         ON assignee."RoleId" = assignee_role."ID"
-        WHERE t."IsActive" = TRUE
-        ORDER BY t."CreatedAt" DESC
+
+      WHERE t."IsActive" = TRUE
+      ORDER BY t."CreatedAt" DESC
     `);
 
     res.json({
@@ -90,6 +94,7 @@ const getTicketFilters = async (req, res) => {
 
 const deleteTicket = async (req, res) => {
   try {
+    const io = req.app.get("io");
     const { id } = req.params;
     const role = req.user.role;
 
@@ -104,6 +109,32 @@ const deleteTicket = async (req, res) => {
       `,
       [id]
     );
+    const ticketRes = await pool.query(
+      `
+      SELECT "TicketNumber", "CreatedByUserId"
+      FROM ticket
+      WHERE "ID" = $1
+      `,
+      [id]
+    );
+    const userRes = await pool.query(
+      `SELECT "FullName" FROM "user" WHERE "ID" = $1`,
+      [userId]
+    );
+
+    const userName = userRes.rows[0].FullName;
+    await createNotification(req, {
+      userId: ticketRes.rows[0].CreatedByUserId,
+      title: "Ticket Deleted",
+      message: `${userName} delete ticket ${ticketRes.rows[0].TicketNumber}`,
+      type: "warning"
+    });
+
+    await notifyTicketUsers(req, id, req.user.userId, {
+      title: "Ticket Deleted",
+      message: `${userName} delete ticket ${ticketRes.rows[0].TicketNumber}`,
+      type: "warning"
+    });
 
     res.json({
       message: "Ticket deleted successfully",

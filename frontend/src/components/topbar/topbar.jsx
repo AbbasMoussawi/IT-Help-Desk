@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useParams } from "react-router-dom";
 import "./topbar.css";
 import {
   FaBars,
@@ -9,12 +10,19 @@ import {
   FaSignOutAlt,
   FaCircle
 } from "react-icons/fa" ;
+import { useNavigate } from "react-router-dom";
+
 
 function TopBar({ setIsOpen, showSearch = true, title = "", icon: Icon }) {
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef(null);
-
+  const [count, setCount] = useState(0);
+  const navigate = useNavigate();
+  const { id } = useParams();
+  const currentUser = JSON.parse(localStorage.getItem("user"));
+  const isMe = !id || currentUser?.id == id;
   const user = JSON.parse(localStorage.getItem("user"));
+  console.log(JSON.parse(localStorage.getItem("user")));
 
   const fullName = user?.fullName || "Unknown";
   const role = user?.role || "No role";
@@ -24,7 +32,20 @@ function TopBar({ setIsOpen, showSearch = true, title = "", icon: Icon }) {
       ? fullName.split(" ").map(n => n[0]).join("").toUpperCase()
       : "U";
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      await fetch("http://localhost:5050/api/auth/logout", {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+
     localStorage.clear();
     window.location.href = "/";
   };
@@ -39,6 +60,29 @@ function TopBar({ setIsOpen, showSearch = true, title = "", icon: Icon }) {
     document.addEventListener("mousedown", close);
     return () => document.removeEventListener("mousedown", close);
   }, []);
+
+  const fetchCount = async () => {
+    try {
+      const res = await fetch("http://localhost:5050/api/notifications/unread-count", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+
+      const data = await res.json();
+      setCount(data.count);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    fetchCount();
+  }, []);
+  const handleNotificationClick = async () => {
+    
+      navigate("/notifications");
+    
+  };
 
   return (
     <header className="topbar">
@@ -58,9 +102,12 @@ function TopBar({ setIsOpen, showSearch = true, title = "", icon: Icon }) {
 
       <div className="topbar-right">
 
-        <div className="notification">
+        <div className="notification" onClick={handleNotificationClick}>
           <FaBell />
-          <span>3</span>
+
+          {count > 0 && (
+            <span className="notif-badge">{count}</span>
+          )}
         </div>
 
         {/* PROFILE */}
@@ -71,7 +118,16 @@ function TopBar({ setIsOpen, showSearch = true, title = "", icon: Icon }) {
         >
 
           {/* avatar */}
-          <div className="avatar">{avatar}</div>
+          <div className="avatar">
+            {user?.image ? (
+              <img
+                src={`http://localhost:5050/uploads/${user.image}`}
+                alt="profile"
+              />
+            ) : (
+              <span>{avatar}</span>
+            )}
+          </div>
 
           {/* info */}
           <div className="profile-info">
@@ -94,7 +150,10 @@ function TopBar({ setIsOpen, showSearch = true, title = "", icon: Icon }) {
           {/* dropdown */}
           <div className={`dropdown ${open ? "show" : ""}`}>
 
-            <div className="dropdown-item">
+            <div
+              className="dropdown-item"
+              onClick={() => navigate(`/users/${currentUser?.id}`)}
+            >
               <FaUser />
               <span>Profile</span>
             </div>

@@ -62,13 +62,13 @@ const Login = () => {
       console.log("ROLE:", role);
 
       if (role === "employee") {
-        navigate("/my-tickets");
+        navigate("/dashboard");
       } 
       else if (role === "it support") {
-        navigate("/assigned-tickets");
+        navigate("/dashboard");
       } 
       else if (role === "admin" || role === "manager") {
-        navigate("/ticket-management");
+        navigate("/dashboard");
       } 
       else {
         setServerError("Invalid role");

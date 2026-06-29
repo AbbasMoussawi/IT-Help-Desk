@@ -1,5 +1,6 @@
 const pool = require("../config/db");
 
+
 const getMyTickets = async (req, res) => {
   try {
     const userId = Number(req.user.userId);

@@ -256,13 +256,13 @@
 
 .comment-own {
   margin-left: auto;
-  background: #d7e7fb;
+  background: #dcecff;
   text-align: right;
 }
 
 .comment-other {
   margin-right: auto;
-  background: #8ebfff;
+  background: #7bb4ff;
   text-align: left;
 }
 
@@ -522,8 +522,8 @@ textarea:disabled::placeholder{
   .ticket-details-page-header,
   .ticket-details-top
     {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 15px;
-  }
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px;
+    }
 }

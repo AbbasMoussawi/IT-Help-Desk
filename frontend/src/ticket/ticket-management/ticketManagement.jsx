@@ -5,8 +5,12 @@ import Sidebar from "../../components/sidebar/sidebar";
 import TopBar from "../../components/topbar/topbar";
 import { getAllowedNextStatuses } from "../../utils/ticketStatusRules";
 import { useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useSearchParams} from "react-router-dom";
+import { FaTasks } from "react-icons/fa";
+
+
 
 import {
   FaSearch,
@@ -16,6 +20,7 @@ import {
   FaTrash,
   FaDownload,
   FaSyncAlt,
+  FaArrowLeft
 } from "react-icons/fa";
 
 function TicketManagement() {
@@ -25,8 +30,7 @@ function TicketManagement() {
   const [ticketsData, setTicketsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState("All");
-  const [priority, setPriority] = useState("All");
+  
   const [status, setStatus] = useState("All");
   const [refreshing, setRefreshing] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
@@ -35,6 +39,23 @@ function TicketManagement() {
   const canDelete = role === "admin";
   const canView = role === "admin" || role === "manager";
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const assigned = searchParams.get("assigned");
+  const priorityParam = searchParams.get("priority") || "All";
+  const location = useLocation();
+  const params = new URLSearchParams(location.search);
+  const categoryFromUrl = params.get("category") || "All";
+  const [category, setCategory] = useState(categoryFromUrl);
+  
+
+  useEffect(() => {
+    const urlStatus = searchParams.get("status") || "All";
+    setStatus(urlStatus);
+  }, [searchParams]);
+
+  useEffect(() => {
+    setCategory(categoryFromUrl);
+  }, [categoryFromUrl]);
 
   const [filterData, setFilterData] = useState({
     categories: [],
@@ -46,6 +67,7 @@ function TicketManagement() {
 
   const filteredTickets = useMemo(() => {
     return ticketsData.filter((t) => {
+
       const title = t.Title || "";
       const desc = t.Description || "";
       const number = String(t.TicketNumber || "");
@@ -58,15 +80,26 @@ function TicketManagement() {
       const matchStatus =
         status === "All" || t.StatusName === status;
 
-      const matchPriority =
-        priority === "All" || t.PriorityName === priority;
-
       const matchCategory =
         category === "All" || t.CategoryName === category;
 
-      return matchSearch && matchStatus && matchPriority && matchCategory;
+      const matchPriority =
+        priorityParam === "All" || t.PriorityName === priorityParam;
+
+      const matchAssigned =
+        assigned === "unassigned"
+          ? t.AssignedToUserId === null
+          : true;
+
+      return (
+        matchSearch &&
+        matchStatus &&
+        matchCategory &&
+        matchPriority &&
+        matchAssigned
+      );
     });
-  }, [ticketsData, search, status, priority, category]);
+  }, [ticketsData, search, status, category, priorityParam, assigned]);
 
   const fetchTickets = async () => {
       try {
@@ -176,14 +209,18 @@ function TicketManagement() {
           setIsOpen={setIsOpen}
           showSearch={false}
           title="Ticket Management"
+          icon={FaTasks}
         />
         
         <div className="ticket-management-container">
 
           <div className="ticket-management-header">
-            <div>
-              <h1>Tickets</h1>
-              <p>Manage and track all support tickets</p>
+            <div className="ticket-management-header-title">
+              <FaArrowLeft className="back-icon" onClick={() => navigate(-1)}/>
+              <div>
+                <h1>Tickets</h1>
+                <p>Manage and track all support tickets</p>
+              </div>
             </div>
             <div className="ticket-management-btn">
                 <button className="ticket-management-btn-outline" onClick={handleExport}>
@@ -221,8 +258,21 @@ function TicketManagement() {
             </div>
 
             {/* STATUS */}
-            <select value={status} onChange={(e) => setStatus(e.target.value)}>
+            <select
+              value={status}
+              onChange={(e) => {
+                const value = e.target.value;
+                setStatus(value);
+
+                if (value === "All") {
+                  navigate("/ticket-management");
+                } else {
+                  navigate(`/ticket-management?status=${encodeURIComponent(value)}`);
+                }
+              }}
+            >
               <option value="All">All Status</option>
+
               {filterData.statuses?.map((s) => (
                 <option key={s.ID} value={s.StatusName}>
                   {s.StatusName}
@@ -231,7 +281,18 @@ function TicketManagement() {
             </select>
 
             {/* PRIORITY */}
-            <select value={priority} onChange={(e) => setPriority(e.target.value)}>
+            <select
+              value={priorityParam}
+              onChange={(e) => {
+                const value = e.target.value;
+
+                if (value === "All") {
+                  navigate("/ticket-management");
+                } else {
+                  navigate(`/ticket-management?priority=${value}`);
+                }
+              }}
+            >
               <option value="All">All Priority</option>
 
               {filterData.priorities?.map((p) => (
@@ -242,7 +303,20 @@ function TicketManagement() {
             </select>
 
             {/* CATEGORY */}
-            <select value={category} onChange={(e) => setCategory(e.target.value)}>
+            <select
+              value={category}
+              onChange={(e) => {
+                const value = e.target.value;
+
+                setCategory(value);
+
+                if (value === "All") {
+                  navigate("/ticket-management");
+                } else {
+                  navigate(`/ticket-management?category=${encodeURIComponent(value)}`);
+                }
+              }}
+            >
               <option value="All">All Category</option>
 
               {filterData.categories?.map((c) => (
@@ -258,8 +332,8 @@ function TicketManagement() {
               onClick={() => {
                 setSearch("");
                 setStatus("All");
-                setPriority("All");
                 setCategory("All");
+                navigate("/ticket-management");
               }}
             >
               <FaSyncAlt />
@@ -340,7 +414,14 @@ function TicketManagement() {
                         className="ticket-management-user"
                       >
                         <div className="ticket-management-avatar">
-                          {ticket.CreatedByName?.charAt(0)}
+                          {ticket.CreatedByImage ? (
+                            <img
+                              src={`http://localhost:5050/uploads/${ticket.CreatedByImage}`}
+                              alt="user"
+                            />
+                          ) : (
+                            ticket.CreatedByName?.charAt(0)
+                          )}
                         </div>
 
                         <div>
@@ -351,19 +432,39 @@ function TicketManagement() {
                     </td>
 
                     <td>
-                      <Link
-                        to={`/users/${ticket.AssignedToUserId}`}
-                        className="ticket-management-user"
-                      >
-                        <div className="ticket-management-avatar">
-                          {ticket.AssignedToName?.charAt(0) || "-"}
-                        </div>
+                      {ticket.AssignedToUserId ? (
+                        <Link
+                          to={`/users/${ticket.AssignedToUserId}`}
+                          className="ticket-management-user"
+                        >
+                          <div className="ticket-management-avatar">
+                            {ticket.AssignedToImage ? (
+                              <img
+                                src={`http://localhost:5050/uploads/${ticket.AssignedToImage}`}
+                                alt="user"
+                              />
+                            ) : (
+                              ticket.AssignedToName?.charAt(0)?.toUpperCase()
+                            )}
+                          </div>
 
-                        <div>
-                          <h5>{ticket.AssignedToName || "-"}</h5>
-                          <span>{ticket.AssignedToRole || "-"}</span>
+                          <div>
+                            <h5>{ticket.AssignedToName}</h5>
+                            <span>{ticket.AssignedToRole}</span>
+                          </div>
+                        </Link>
+                      ) : (
+                        <div className="ticket-management-user unassigned">
+                          <div className="ticket-management-avatar">
+                            -
+                          </div>
+
+                          <div>
+                            <h5>Unassigned</h5>
+                            <span>No user assigned</span>
+                          </div>
                         </div>
-                      </Link>
+                      )}
                     </td>
 
                     <td>

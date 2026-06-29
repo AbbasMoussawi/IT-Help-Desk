@@ -138,7 +138,11 @@
   transition: .3s ease all;
 }
 
-
+.ticket-management-header-title{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
 .ticket-management-filters select {
   flex: 1;
   min-width: 120px;
@@ -306,9 +310,13 @@
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+  max-width: 220px;
+  transition: 3s;
 }
 
-
+.ticket-management-user h5{
+  transition: .3s;
+}
 .ticket-management-user:hover h5 {
   color: #3498db;
 }
@@ -341,6 +349,12 @@
 
   font-size: 13px;
   font-weight: 700;
+  transition: .3s;
+}
+.ticket-management-avatar img{
+  width: 100%;
+  height: 100%;
+  border-radius: 100%;
 }
 
 .ticket-management-user h5 {

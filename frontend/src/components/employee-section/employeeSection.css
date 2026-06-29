@@ -1,0 +1,458 @@
+.employee-dashboard-section {
+  padding: 20px;
+}
+
+
+.employee-top-grid {
+  display: grid;
+  grid-template-columns: 2fr 2fr ;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.employee-activity-card,
+.employee-tickets-card,
+.employee-actions-card,
+.employee-knowledge-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+.employee-activity-header,
+.employee-tickets-header,
+.employee-knowledge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.employee-actions-header {
+  margin-bottom: 25px;
+}
+
+.employee-activity-header h2,
+.employee-tickets-header h2,
+.employee-actions-header h2,
+.employee-knowledge-header h2 {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
+}
+
+.employee-activity-header h2 svg {
+  color: #3b82f6;
+  font-size: 30px;
+}
+.employee-tickets-header h2 svg {
+  color: #8b5cf6;
+  font-size: 30px;
+}
+.employee-knowledge-header h2 svg {
+  color: #10b981;
+  font-size: 30px;
+}
+.employee-actions-header h2 svg {
+  color: #f59e0b;
+  font-size: 30px;
+}
+
+.employee-activity-view-btn,
+.employee-tickets-view-btn,
+.employee-knowledge-view-btn {
+  border: none;
+  text-decoration: none;
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.employee-activity-view-btn:hover,
+.employee-tickets-view-btn:hover,
+.employee-knowledge-view-btn:hover {
+  transform: translateY(-1px);
+  background: #dbeafe;
+}
+.employee-activity-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.employee-activity-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  padding: 18px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.employee-activity-item:last-child {
+  border-bottom: none;
+}
+
+.employee-activity-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.employee-activity-content {
+  flex: 1;
+}
+
+.employee-activity-content h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 5px;
+}
+
+.employee-activity-content p {
+  font-size: 14px;
+  color: #64748b;
+  line-height: 1.5;
+}
+
+.employee-activity-time {
+  margin-left: auto;
+  font-size: 13px;
+  color: #94a3b8;
+  white-space: nowrap;
+}
+
+.employee-activity-bottom-btn,
+.employee-ticket-bottom-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  padding: 12px;
+  text-decoration: none;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  background: #eff6ff;
+
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.employee-activity-bottom-btn:hover,
+.employee-ticket-bottom-btn:hover {
+  background: #d9e9fe;
+  transform: translateY(-2px);
+}
+.employee-activity-icon.green { color: #22c55e; }
+.employee-activity-icon.orange { color: #f97316; }
+.employee-activity-icon.blue { color: #3b82f6; }
+.employee-activity-icon.purple { color: #a855f7; }
+.employee-activity-icon.teal { color: #14b8a6; }
+.employee-activity-icon.gray { color: #94a3b8; }
+
+.employee-tickets-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.employee-ticket-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 18px 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.employee-ticket-item:last-child {
+  border-bottom: none;
+}
+
+.employee-ticket-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+
+  background: #dbeafe;
+  color: #2563eb;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.employee-ticket-content {
+  flex: 1;
+}
+
+.employee-ticket-content h4 {
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.employee-ticket-content span {
+  display: block;
+  font-size: 13px;
+  color: #2563eb;
+  margin-bottom: 4px;
+}
+
+.employee-ticket-content p {
+  font-size: 13px;
+  color: #64748b;
+}
+
+.employee-ticket-status {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+
+
+.employee-status-open {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.employee-status-progress {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.employee-status-resolved {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.employee-status-closed {
+  background: #e5e7eb;
+  color: #475569;
+}
+
+.employee-bottom-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr; 
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.employee-knowledge-card,
+.employee-actions-card {
+  height: 100%;
+}
+
+.employee-actions-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.employee-action-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+
+  padding: 16px;
+  text-decoration: none;
+  border: 1px solid #f1f2f4;
+  border-radius: 14px;
+
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.employee-action-item:hover {
+  transform: translateY(-2px);
+  background: #e3f0fb;
+}
+
+.employee-action-icon {
+  width: 44px;
+  height: 44px;
+
+  border-radius: 12px;
+
+  background: #bad7fc;
+  color: #2563eb;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 18px;
+  transition: .3s;
+}
+.employee-action-icon:hover{
+  background: #bddafd;
+  color: #175bee;
+}
+
+.employee-action-content h4 {
+  font-size: 14px;
+  color: #0f172a;
+  margin-bottom: 4px;
+}
+
+.employee-action-content p {
+  font-size: 13px;
+  color: #64748b;
+}
+
+
+.employee-knowledge-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.employee-knowledge-item {
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  padding: 20px;
+  transition: 0.3s;
+}
+
+.employee-knowledge-item:hover {
+  transform: translateY(-2px);
+  background: #f1f6fb;
+}
+
+.employee-knowledge-icon {
+  width: 50px;
+  height: 50px;
+
+  border-radius: 12px;
+
+  background: #dbeafe;
+  color: #2563eb;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 20px;
+
+  margin-bottom: 15px;
+}
+
+.employee-knowledge-item h4 {
+  font-size: 15px;
+  color: #0f172a;
+  margin-bottom: 10px;
+}
+
+.employee-knowledge-item p {
+  font-size: 13px;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+
+.green {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.orange {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.blue {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.purple {
+  background: #ede9fe;
+  color: #7c3aed;
+}
+
+
+
+@media (max-width: 1200px) {
+  .employee-top-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .employee-knowledge-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .employee-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+@media (max-width: 768px) {
+  .employee-dashboard-section {
+    padding: 15px;
+  }
+
+  .employee-knowledge-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .employee-ticket-item,
+  .employee-activity-item {
+    flex-wrap: wrap;
+  }
+
+  .employee-activity-time {
+    width: 100%;
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 576px) {
+  .employee-activity-card,
+  .employee-tickets-card,
+  .employee-actions-card,
+  .employee-knowledge-card {
+    padding: 16px;
+  }
+
+  .employee-activity-header h2,
+  .employee-tickets-header h2,
+  .employee-actions-header h2,
+  .employee-knowledge-header h2 {
+    font-size: 18px;
+  }
+
+  .employee-ticket-icon,
+  .employee-activity-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+}

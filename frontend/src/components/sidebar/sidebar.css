@@ -78,8 +78,10 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-
-  padding: 10px 14px 20px;
+  padding: 22px 14px 32px;
+}
+.sidebar:not(.assigned) li {
+  margin-bottom: 10px;
 }
 
 .sidebar ul {
@@ -110,7 +112,7 @@
   align-items: center;
   gap: 12px;
 
-  padding: 13px 14px;
+  padding: 11px 14px;
   border-radius: 12px;
 
   text-decoration: none;
@@ -218,7 +220,7 @@
 
   background: #dbeafe;
   color: #2563eb;
-
+  box-shadow: 0 30px 30px rgba(0, 0, 0, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;

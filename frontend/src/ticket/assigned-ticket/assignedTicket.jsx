@@ -6,20 +6,29 @@ import {
   FaPaperclip,
   FaDownload,
   FaSyncAlt,
+  FaClipboardCheck
 } from "react-icons/fa";
 
 import Sidebar from "../../components/sidebar/sidebar";
 import TopBar from "../../components/topbar/topbar";
 import { useEffect, useState, useRef  } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 function AssignedTicket() {
   const [isOpen, setIsOpen] = useState(false);
   const didFetch = useRef(false);
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState("All");
-  const [priority, setPriority] = useState("All");
+  
+  
   const [category, setCategory] = useState("All");
+  const location = useLocation();
+
+  const queryParams = new URLSearchParams(location.search);
+  const urlPriority = queryParams.get("priority");
+  const [priority, setPriority] = useState( urlPriority || "All");
+  
 
   const [tickets, setTickets] = useState([]);
   const [counts, setCounts] = useState({
@@ -39,7 +48,13 @@ function AssignedTicket() {
     statuses: [],
     priorities: [],
   });
-
+  useEffect(() => {
+    if (urlPriority) {
+      setPriority(urlPriority);
+    } else {
+      setPriority("All");
+    }
+  }, [urlPriority]);
   
   const fetchTickets = async () => {
     try {
@@ -186,7 +201,7 @@ function AssignedTicket() {
       />
 
       <div className="main">
-        <TopBar setIsOpen={setIsOpen} />
+        <TopBar setIsOpen={setIsOpen} title="Assigned Tickets" icon={FaClipboardCheck}/>
 
         <div className="page">
 
@@ -237,7 +252,15 @@ function AssignedTicket() {
             {/* PRIORITY */}
             <select
               value={priority}
-              onChange={(e) => setPriority(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                setPriority(value);
+                if (value === "All") {
+                  navigate("/assigned-tickets");
+                } else {
+                  navigate(`/assigned-tickets?priority=${value}`);
+                }
+              }}
             >
               <option value="All">All Priority</option>
               {filterData.priorities?.map((p) => (
@@ -268,6 +291,7 @@ function AssignedTicket() {
                 setStatus("All");
                 setPriority("All");
                 setCategory("All");
+                navigate("/assigned-tickets");
               }}
             >
               Clear Filters

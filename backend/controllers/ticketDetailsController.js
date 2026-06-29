@@ -1,5 +1,5 @@
 const pool = require("../config/db");
-
+const { createNotification, notifyTicketUsers } = require("./notificationController");
 const getTicketDetailsById  = async (req, res) => {
   console.log("TICKET DETAILS CONTROLLER");
   try {
@@ -69,6 +69,8 @@ const getTicketDetailsById  = async (req, res) => {
 
 const updateStatus = async (req, res) => {
   try {
+    const userId = req.user.userId;
+    const io = req.app.get("io");
     const { id } = req.params;
     const { status } = req.body;
     const role = req.user.role;
@@ -81,13 +83,20 @@ const updateStatus = async (req, res) => {
 
     const ticket = await pool.query(
       `
-      SELECT t.*, s."StatusName"
+      SELECT 
+        t."TicketNumber",
+        t."CreatedByUserId",
+        t."StatusId",
+        s."StatusName"
       FROM ticket t
       JOIN status s ON t."StatusId" = s."ID"
       WHERE t."ID" = $1
       `,
       [id]
     );
+    
+
+    
 
     if (!ticket.rows.length) {
       return res.status(404).json({
@@ -106,6 +115,7 @@ const updateStatus = async (req, res) => {
     await pool.query(
       `
       UPDATE ticket
+      
       SET
         "StatusId" = (
           SELECT "ID"
@@ -117,6 +127,19 @@ const updateStatus = async (req, res) => {
       `,
       [status, id]
     );
+    const userRes = await pool.query(
+      `SELECT "FullName" FROM "user" WHERE "ID" = $1`,
+      [req.user.userId]
+    );
+
+    const userName = userRes.rows[0].FullName;
+    
+
+    await notifyTicketUsers(req, id, req.user.userId, {
+      title: "Ticket Status Changed",
+      message: `${userName} changed status of Ticket ${ticket.rows[0].TicketNumber} to ${status}`,
+      type: "status"
+    });
 
     await pool.query(
       `

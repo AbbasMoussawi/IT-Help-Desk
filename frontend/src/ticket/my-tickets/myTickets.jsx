@@ -7,19 +7,29 @@ import {
   FaSyncAlt,
   FaUserCog,
   FaHourglass,
-  FaPlus
+  FaPlus,
+  FaTicketAlt 
 } from "react-icons/fa";
 
 import Sidebar from "../../components/sidebar/sidebar";
 import TopBar from "../../components/topbar/topbar";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 function MyTickets() {
   const [isOpen, setIsOpen] = useState(false);
 
   const [search, setSearch] = useState("");
-  const [status, setStatus] = useState("All");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const [status, setStatus] = useState(
+    searchParams.get("status") || "All"
+  );
+  useEffect(() => {
+    const urlStatus = searchParams.get("status") || "All";
+    setStatus(urlStatus);
+  }, [searchParams]);
   const [priority, setPriority] = useState("All");
   const [category, setCategory] = useState("All");
 
@@ -180,7 +190,7 @@ function MyTickets() {
 
       <div className="main">
 
-        <TopBar setIsOpen={setIsOpen} />
+        <TopBar setIsOpen={setIsOpen} title="My Tickets" icon={FaTicketAlt }/>
 
         <div className="page">
 
@@ -219,7 +229,16 @@ function MyTickets() {
               />
             </div>
 
-            <select value={status} onChange={(e) => setStatus(e.target.value)}>
+            <select value={status} onChange={(e) => {
+              const value = e.target.value;
+              setStatus(value);
+
+              if (value === "All") {
+                setSearchParams({});
+              } else {
+                setSearchParams({ status: value });
+              }
+            }}>
               <option value="All">All Status</option>
               {filterData.statuses?.map((s) => (
                 <option key={s.ID} value={s.StatusName}>
@@ -253,6 +272,7 @@ function MyTickets() {
                 setStatus("All");
                 setPriority("All");
                 setCategory("All");
+                navigate("/my-tickets")
               }}
             >
               Clear Filtres

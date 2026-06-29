@@ -1,0 +1,270 @@
+.team-performance-page {
+  display: flex;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.team-performance-content {
+  flex: 1;
+  margin-left: 240px;
+}
+
+.team-performance-container {
+  padding: 25px;
+}
+
+.team-performance-header {
+  margin-bottom: 25px;
+}
+
+.team-performance-header h1 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.team-performance-header p {
+  color: #64748b;
+  margin-top: 5px;
+}
+
+.team-performance-card {
+  background: white;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.team-performance-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 20px;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.team-performance-header-title{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.team-performance-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.team-performance-table th {
+  text-align: left;
+  padding: 16px;
+  background: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+}
+
+.team-performance-table td {
+  padding: 16px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.team-performance-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.team-performance-avatar {
+  width: 40px;
+  height: 40px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.team-performance-rank {
+  width: 36px;
+  height: 36px;
+
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+}
+
+.team-performance-rank.gold {
+  background: #fef3c7;
+}
+
+.team-performance-rank.silver {
+  background: #e5e7eb;
+}
+
+.team-performance-rank.bronze {
+  background: #fed7aa;
+}
+
+.team-performance-resolved {
+  font-weight: 700;
+  color: #f5fff8;
+  padding: 10px 13px;
+  border-radius: 100%;
+  background-color: #64cb8a;
+  transition: .3s;
+}
+.team-performance-resolved:hover{
+    background-color: #4bb371;
+}
+
+.team-performance-badge {
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: #f1f5f9;
+  font-size: 13px;
+}
+
+.team-performance-badge.gold {
+  background: #fef3c7;
+  color: #b45309;
+  padding: 10px 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.team-performance-loading,
+.team-performance-empty {
+  padding: 40px;
+  text-align: center;
+  color: #64748b;
+}
+
+.award-1,
+.award-2,
+.award-3 {
+  font-size: 24px;
+  transition: transform .2s ease;
+}
+
+.award-1:hover,
+.award-2:hover,
+.award-3:hover {
+  transform: scale(1.15);
+}
+
+.award-1 {
+  color: #fbbf24;
+  filter: drop-shadow(0 0 6px rgba(251,191,36,.5));
+}
+
+.award-2 {
+  color: #cbd5e1;
+  filter: drop-shadow(0 0 6px rgba(203,213,225,.5));
+}
+
+.award-3 {
+  color: #d97706;
+  filter: drop-shadow(0 0 6px rgba(217,119,6,.4));
+}
+@media (max-width: 1024px) {
+
+  .team-performance-content {
+    margin-left: 0;
+  }
+
+  .team-performance-container {
+    padding: 20px;
+  }
+
+  .team-performance-header h1 {
+    font-size: 24px;
+  }
+
+}
+@media (max-width: 768px) {
+
+  .team-performance-container {
+    padding: 15px;
+  }
+
+  .team-performance-header {
+    margin-bottom: 20px;
+  }
+
+  .team-performance-header h1 {
+    font-size: 22px;
+  }
+
+  .team-performance-header p {
+    font-size: 14px;
+  }
+
+  .team-performance-card {
+    overflow-x: auto;
+  }
+
+  .team-performance-table {
+    min-width: 700px;
+  }
+
+  .team-performance-table th,
+  .team-performance-table td {
+    padding: 12px;
+  }
+
+  .team-performance-avatar {
+    width: 34px;
+    height: 34px;
+  }
+
+  .team-performance-badge {
+    font-size: 12px;
+    padding: 5px 10px;
+  }
+
+}
+@media (max-width: 480px) {
+
+  .team-performance-container {
+    padding: 10px;
+  }
+
+  .team-performance-header h1 {
+    font-size: 20px;
+  }
+
+  .team-performance-header p {
+    font-size: 13px;
+  }
+
+  .team-performance-card-header {
+    padding: 16px;
+    font-size: 16px;
+  }
+
+  .team-performance-avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .team-performance-user span {
+    font-size: 14px;
+  }
+
+  .team-performance-resolved {
+    font-size: 14px;
+  }
+
+}

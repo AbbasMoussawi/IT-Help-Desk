@@ -1,4 +1,5 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom"
+import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CountsProvider } from "./context/countsContext";
 
@@ -17,10 +18,32 @@ import TicketManagement from "./ticket/ticket-management/ticketManagement";
 
 import Dashboard from "./dashboard/dashboard";
 import ProtectedRoute from "./protectedroute/protectedroute";
+import ActivityPage from "./page-activity/activityPage";
+import TeamPerformance from "./team-performance/teamPerformance";
+import UserOverview from "./users/user-overview/userOverview";
+import Notifications from "./notifications/notifications";
+import CreateUser from "./users/create-user/createUser";
+import Profile from "./users/profile/profile";
 
 function App() {
   const location = useLocation();
+  const prevPathRef=useRef(location.pathname);
 
+  useEffect(() => {
+    const prevPath = prevPathRef.current;
+    const currentPath = location.pathname;
+
+    if (prevPath === "/notifications" && currentPath !== "/notifications") {
+      fetch("http://localhost:5050/api/notifications/mark-all-read", {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+      });
+    }
+
+    prevPathRef.current = currentPath;
+  }, [location.pathname]);
   return (
     <CountsProvider>
       <AnimatePresence mode="wait">
@@ -113,6 +136,14 @@ function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+              path="/activity"
+              element={
+                <ProtectedRoute allowedRoles={["Admin", "Manager", "IT Support", "Employee"]}>
+                  <ActivityPage />
+                </ProtectedRoute>
+              }
+            />
 
 
             <Route
@@ -129,6 +160,54 @@ function App() {
               element={
                 <ProtectedRoute allowedRoles={["Admin", "Manager"]}>
                   <TicketManagement />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/team-performance"
+              element={
+                <ProtectedRoute allowedRoles={["Admin", "Manager"]}>
+                  <TeamPerformance />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/users" element={
+              <ProtectedRoute allowedRoles={["Admin"]}>
+                  <UserOverview />
+              </ProtectedRoute>}
+            />
+            <Route path="/create-user" element={
+              <ProtectedRoute allowedRoles={["Admin"]}>
+                  <CreateUser />
+              </ProtectedRoute>}
+            />
+            
+            <Route path="/edit-user/:id" element={
+              <ProtectedRoute allowedRoles={["Admin"]}>
+                  <CreateUser />
+              </ProtectedRoute>} 
+            />
+            <Route
+              path="/notifications"
+              element={
+                <ProtectedRoute allowedRoles={["Admin", "Manager", "IT Support", "Employee"]}>
+                  <Notifications />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute allowedRoles={["Admin", "Manager", "IT Support", "Employee"]}>
+                  <Profile />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/users/:id"
+              element={
+                <ProtectedRoute allowedRoles={["Admin", "Manager", "IT Support", "Employee"]}>
+                  <Profile />
                 </ProtectedRoute>
               }
             />

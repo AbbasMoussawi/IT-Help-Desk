@@ -1,0 +1,367 @@
+.user-page {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.user-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.user-header h2 {
+  font-size: 24px;
+  color: #0f172a;
+}
+.new-user-btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 10px;
+  text-decoration: none;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.new-user-btn:hover {
+  transform: translateY(-2px);
+  background: #1e40af;
+}
+
+.user-controls {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.search-box {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f1f5f9;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.search-box input {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 100%;
+}
+
+.user-controls select {
+  flex: 1;
+  min-width: 180px;
+  width: 350px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  background: white;
+  cursor: pointer;
+  transition: .3s;
+}
+.user-controls select:focus{
+    border: 1px solid rgb(40, 144, 255);
+}
+
+.user-table {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.user-header-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1.5fr 1fr 160px;
+  padding: 12px 14px;
+  font-weight: 700;
+  color: #64748b;
+  font-size: 13px;
+}
+
+
+.user-row {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1.5fr 1fr 160px;
+  padding: 14px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+  align-items: center;
+  transition: .3s;
+}
+.user-row:hover{
+    transform: translateY(-2px);
+    background: #adc2fa;
+}
+
+.user-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+
+.user-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: bold;
+}
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.user-avatar.admin {
+  background: #7c3aed;
+}
+.user-avatar.manager {
+  background: #16a34a;
+}
+.user-avatar.it {
+  background: #2563eb;
+}
+.user-avatar.employee {
+  background: #64748b;
+}
+.icon {
+  font-size: 18px;
+  color: #64748b;
+}
+.email-icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #ef4444, #f97316);
+  border-radius: 8px;
+
+  color: #fff;
+}
+
+.role {
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+}
+
+.role.Admin { background: #dbeafe; color: #1d4ed8; }
+.role.Manager { background: #dcfce7; color: #166534; }
+.role.IT { background: #fef3c7; color: #92400e; }
+.role.Employee { background: #fee2e2; color: #991b1b; }
+
+.role-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 16px;
+  color: #fff;
+}
+.role-icon.Admin {
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+}
+
+.role-icon.Manager {
+  background: linear-gradient(135deg, #16a34a, #4ade80);
+}
+
+.role-icon.IT {
+  background: linear-gradient(135deg, #2563eb, #60a5fa);
+}
+
+.role-icon.Employee {
+  background: linear-gradient(135deg, #64748b, #94a3b8);
+}
+
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 600;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.status.Online {
+  color: #16a34a;
+}
+.status.Online .dot {
+  background: #16a34a;
+}
+
+.status.Offline {
+  color: #dc2626;
+}
+.status.Offline .dot {
+  background: #dc2626;
+}
+
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+
+.status.Online {
+  background: rgba(22, 163, 74, 0.15);
+  color: #16a34a;
+}
+.status.Online .dot {
+  background: #16a34a;
+}
+
+.status.Offline {
+    background: rgba(220, 38, 38, 0.15);
+  color: #dc2626;
+}
+.status.Offline .dot {
+  background: #dc2626;
+}
+
+.actions-cell {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.user-action {
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: .3s ease;
+}
+.user-action.view {
+  background: #c7ddf9;
+  color: #2563eb;
+}
+.user-action.view:hover {
+  background: #90b9ef;
+  transform: scale(1.1);
+}
+.user-action.edit {
+  background: #f8e6a0;
+  color: #d97706;
+}
+.user-action.edit:hover {
+  background: #f1d875;
+  transform: scale(1.1);
+}
+.user-action.delete {
+  background: #fac3c3;
+  color: #dc2626;
+}
+.user-action.delete:hover {
+  background: #f59494;
+  transform: scale(1.1);
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.modal-box {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 320px;
+  text-align: center;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.btn-cancel {
+  background: #ccc;
+  border: none;
+  padding: 8px 12px;
+  transition: .3s;
+}
+.btn-cancel:hover{
+  cursor: pointer;
+  background: #b9b9b9;
+  transform: translateY(-1px);
+}
+.btn-delete {
+  background: rgb(252, 45, 45);
+  color: #fff;
+  border: none;
+  padding: 8px 12px;
+  transition: .3s;
+}
+.btn-delete:hover{
+  cursor: pointer;
+  background: rgb(255, 19, 19);
+  transform: translateY(-1px);
+}
+@media (max-width: 900px) {
+  .user-header-row,
+  .user-row {
+    grid-template-columns: 1fr 1fr;
+    row-gap: 10px;
+  }
+
+  .user-row span:nth-child(3),
+  .user-header-row span:nth-child(3) {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .user-row,
+  .user-header-row {
+    grid-template-columns: 1fr;
+  }
+
+  .status {
+    justify-content: flex-start;
+  }
+}

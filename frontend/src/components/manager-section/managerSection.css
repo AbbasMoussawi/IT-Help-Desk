@@ -1,0 +1,529 @@
+.manager-dashboard-section {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  width: 100%;
+  padding: 15px;
+}
+.manager-top-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 13px;
+}
+.manager-bottom-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 13px;
+}
+
+.manager-unassigned-card,
+.manager-priority-card,
+.manager-activity-card,
+.manager-performance-card,
+.manager-notifications-card {
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid #e8edf5;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+.manager-unassigned-header,
+.manager-priority-header,
+.manager-activity-header,
+.manager-performance-header,
+.manager-notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.manager-unassigned-header h2,
+.manager-priority-header h2,
+.manager-activity-header h2,
+.manager-performance-header h2,
+.manager-notifications-header h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.manager-unassigned-header h2 svg{
+    color: #f59e0b;
+    font-size: 30px;
+}
+.manager-priority-header h2 svg{
+    color: #ef4444;
+    font-size: 30px;
+}
+.manager-performance-header h2 svg{
+    color: #10b981;
+    font-size: 30px;
+}
+.manager-activity-header h2 svg{
+    color: #3b82f6;
+    font-size: 30px;
+}
+.manager-notifications-header h2 svg {
+  font-size: 30px;
+  color: #f59e0b;
+}
+
+.manager-unassigned-view-btn,
+.manager-priority-view-btn,
+.manager-activity-view-btn,
+.manager-notifications-view-btn {
+  border: none;
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.manager-unassigned-view-btn:hover,
+.manager-priority-view-btn:hover,
+.manager-activity-view-btn:hover,
+.manager-notifications-view-btn:hover {
+  background: #dbeafe;
+}
+
+.manager-unassigned-list,
+.manager-priority-list,
+.manager-activity-list,
+.manager-performance-list,
+.manager-notifications-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  
+}
+
+
+.manager-unassigned-item {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 16px;
+  background: #eef3fa;
+  transition: 0.3s;
+}
+
+.manager-unassigned-item:hover {
+  background: #d9ecfe;
+  transform: translateY(-2px);
+}
+
+.manager-unassigned-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #eff6ff;
+  color: #2563eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+}
+
+.manager-unassigned-content h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.manager-unassigned-content span {
+  font-size: 14px;
+  color: #64748b;
+}
+
+.manager-unassigned-content p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: #94a3b8;
+}
+.manager-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  color: #888;
+}
+
+.manager-empty-state svg {
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
+
+
+.manager-priority-item {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 16px;
+  background: #ffeceb;
+  transition: .3s;
+}
+.manager-priority-item:hover{
+    transform: translateY(-2px);
+    background: #ffd8d6;
+}
+
+.manager-priority-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #ffedd5;
+  color: #ea580c;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+}
+.manager-priority-content{
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.manager-priority-content h4 {
+  margin: 0;
+  font-size: 16px;
+}
+.manager-priority-content-number{
+  color: #337ef8;
+}
+.manager-priority-content p {
+  margin: 4px 0 0;
+  color: #64748b;
+}
+.manager-status,
+.it-status-text {
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-open {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.status-resolved {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.status-closed {
+  background: #e5e7eb;
+  color: #6b7280;
+}
+
+.status-progress {
+  background: #f9ddb7;
+  color: #ea580c;
+}
+
+
+.manager-activity-item {
+  display: grid;
+  grid-template-columns: 40px 1fr auto;
+  grid-template-rows: auto auto;
+  column-gap: 12px;
+  border-radius: 16px;
+  row-gap: 4px;
+  padding: 14px 16px;
+  border-bottom: 1px solid #eee;
+  align-items: start;
+  transition: .3s;
+}
+.manager-activity-item:hover{
+    background: #e3f0fe;
+    transform: translateY(-2px);
+}
+
+.manager-activity-icon {
+  width: 42px;
+  height: 42px;
+  min-width: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.manager-activity-content {
+  flex: 1;
+}
+.manager-activity-title {
+  grid-column: 2;
+  font-weight: 600;
+  font-size: 14px;
+}
+.manager-activity-description {
+  grid-column: 2;
+  font-size: 12px;
+  color: #666;
+}
+.manager-activity-ticket {
+  grid-column: 2;
+  font-size: 11px;
+  color: #999;
+}
+
+.manager-activity-content h4 {
+  margin: 0;
+  font-size: 15px;
+}
+.manager-activity-time {
+  grid-column: 3;
+  grid-row: 1;
+  font-size: 13px;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+
+
+.manager-updates-view-btn{
+  border: none;
+  text-decoration: none;
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  
+  transition: 0.3s;
+}
+.manager-updates-view-btn:hover{
+  transform: translateY(-1.5px);
+  background: #dbeafe;
+}
+.manager-meta{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.manager-time{
+  font-size: 13px;
+  color: rgb(158, 158, 158);
+}
+.manager-performance-item {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 16px;
+  background: #e2f1fe;
+  transition: .3s;
+}
+.manager-performance-item:hover{
+    background: #cae4fd;
+    transform: translateY(-2px);
+}
+
+.manager-performance-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: #9fc7fc;
+  color: #2563eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+}
+
+.manager-performance-content h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.manager-performance-content p {
+  margin: 4px 0 0;
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.manager-ticket-bottom-btn{
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  padding: 12px;
+  text-decoration: none;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: auto;
+  transition: 0.3s;
+}
+
+
+.manager-ticket-bottom-btn:hover {
+  background: rgb(210, 227, 251);
+  transform: translateY(-2px);
+}
+
+
+.manager-notifications-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.manager-notification-item {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  padding: 16px;
+  border-radius: 16px;
+  background: #edf5fe;
+  transition: .3s;
+}
+.manager-notification-item:hover{
+    transform: translateY(-2px);
+    background: #deecfc;
+}
+
+.manager-notification-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+.manager-notification-content h4 {
+  margin: 0;
+  font-size: 15px;
+}
+.manager-notification-text {
+  font-size: 13px;
+  color: #666;
+  line-height: 1.4;
+}
+.manager-notification-time {
+  font-size: 12px;
+  color: #999;
+}
+.manager-notification-icon.purple { 
+  color: #722ed1; 
+}
+.manager-notification-icon.blue { 
+  color: #1677ff; 
+}
+.manager-notification-icon.green { 
+  color: #52c41a; 
+}
+.manager-notification-icon.teal { 
+  color: #13c2c2; 
+}
+.manager-notification-icon.gray { 
+  color: #999; 
+}
+
+.blue {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.green {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.orange {
+  background: #ffe4c1;
+  color: #ea580c;
+}
+
+.red {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.purple {
+  background: #f3e8ff;
+  color: #9333ea;
+}
+
+.manager-activity-description {
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.manager-activity-ticket {
+  font-size: 12px;
+  color: #3b82f6;
+  font-weight: 600;
+}
+
+@media (max-width: 1300px) {
+  .manager-top-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .manager-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .manager-unassigned-card,
+  .manager-priority-card,
+  .manager-activity-card,
+  .manager-performance-card,
+  .manager-notifications-card {
+    padding: 18px;
+  }
+
+  .manager-unassigned-header h2,
+  .manager-priority-header h2,
+  .manager-activity-header h2,
+  .manager-performance-header h2,
+  .manager-notifications-header h2 {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .manager-unassigned-item,
+  .manager-priority-item,
+  .manager-activity-item,
+  .manager-performance-item,
+  .manager-notification-item {
+    padding: 12px;
+  }
+
+  .manager-unassigned-content h4,
+  .manager-priority-content h4,
+  .manager-activity-content h4,
+  .manager-performance-content h4,
+  .manager-notification-content h4 {
+    font-size: 14px;
+  }
+}

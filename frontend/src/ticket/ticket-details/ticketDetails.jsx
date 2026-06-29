@@ -1,13 +1,15 @@
 import "./ticketDetails.css";
-import { FaDownload, FaUser, FaUserCog, FaLayerGroup, FaFlag, FaPaperclip, FaArrowLeft   } from "react-icons/fa";
+import { FaDownload, FaUser, FaUserCog, FaLayerGroup, FaFlag, FaPaperclip, FaArrowLeft, FaInfoCircle   } from "react-icons/fa";
 import { MdSend } from "react-icons/md";
 import Sidebar from "../../components/sidebar/sidebar";
 import TopBar from "../../components/topbar/topbar";
 import { getAllowedNextStatuses } from "../../utils/ticketStatusRules";
+import {formatTimeAgo} from "../../utils/formatTimeAgo";
 
 import { useParams } from "react-router-dom";
 import { useEffect, useState, useCallback  } from "react";
 import { useNavigate } from "react-router-dom";
+
 
 function TicketDetails() {
   const { id } = useParams();
@@ -265,7 +267,7 @@ function TicketDetails() {
       <Sidebar menuType="assigned" counts={counts} />
       <div className="main">
 
-        <TopBar />
+        <TopBar title="Ticket Details" icon={FaInfoCircle}/>
 
         <div className="ticket-details-container">
 
@@ -283,8 +285,7 @@ function TicketDetails() {
               <div>
                 <h2>{ticket.Title}</h2>
                 <p>
-                  Created on:{" "}
-                  {new Date(ticket.CreatedAt).toLocaleDateString()}
+                  Created on: {formatTimeAgo(ticket.CreatedAt)}
                 </p>
               </div>
 
@@ -350,7 +351,7 @@ function TicketDetails() {
 
                 <div className="attachment-meta">
                   <small>{a.UploadedBy}</small>
-                  <small>{new Date(a.CreatedAt).toLocaleString()}</small>
+                  <small>{formatTimeAgo(a.CreatedAt)}</small>
                 </div>
 
                 <a
@@ -387,12 +388,7 @@ function TicketDetails() {
                   <p>{c.CommentText}</p>
 
                   <small>
-                    {new Date(c.CreatedAt).toLocaleString("en-GB", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                    {formatTimeAgo(c.CreatedAt)}
                   </small>
                 </div>
               );
@@ -421,7 +417,7 @@ function TicketDetails() {
                   placeholder="Write comment..." disabled={isClosed}
                 />
 
-                <button className="send-btn" onClick={addComment} disabled={isClosed}>
+                <button className="send-btn" onClick={addComment} disabled={isClosed || newComment.trim().length===0}>
                   <MdSend className="comment-form-button-icon"/>
                 </button>
               </div>
@@ -458,13 +454,7 @@ function TicketDetails() {
                   )}
 
                   <small>
-                    {new Date(activity.CreatedAt).toLocaleString("en-GB", {
-                      day: "2-digit",
-                      month: "2-digit",
-                      year: "numeric",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                    })}
+                    {formatTimeAgo(activity.CreatedAt)}
                   </small>
 
                 </div>

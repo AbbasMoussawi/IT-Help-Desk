@@ -13,6 +13,7 @@ import {
   FaFolderOpen,
   FaSpinner,
   FaCheckCircle,
+  FaUsers
 } from "react-icons/fa";
 
 function Sidebar({ isOpen, setIsOpen, menuType, counts, context}) {
@@ -149,15 +150,10 @@ function Sidebar({ isOpen, setIsOpen, menuType, counts, context}) {
                   </Link>
                 </li>
 
-                <li className={isActive("/notifications") ? "active" : ""}>
-                  <Link to="/notifications">
-                    <FaBell />
-                    <span>Notifications</span>
-                  </Link>
-                </li>
+                
 
                 <li className={isActive("/profile") ? "active" : ""}>
-                  <Link to="/profile">
+                  <Link to={`/users/${user?.ID || user?.id}`}>
                     <FaUser />
                     <span>Profile</span>
                   </Link>
@@ -189,26 +185,16 @@ function Sidebar({ isOpen, setIsOpen, menuType, counts, context}) {
                       </Link>
                     </li>
 
-                    <li className={isActive("/notifications") ? "active" : ""}>
-                      <Link to="/notifications">
-                        <FaBell />
-                        <span>Notifications</span>
-                      </Link>
-                    </li>
+                    
 
                     <li className={isActive("/profile") ? "active" : ""}>
-                      <Link to="/profile">
+                      <Link to={`/users/${user?.ID || user?.id}`}>
                         <FaUser />
                         <span>Profile</span>
                       </Link>
                     </li>
 
-                    <li className={isActive("/settings") ? "active" : ""}>
-                      <Link to="/settings">
-                        <FaCog />
-                        <span>Settings</span>
-                      </Link>
-                    </li>
+                    
                   </>
                 )}
 
@@ -228,34 +214,31 @@ function Sidebar({ isOpen, setIsOpen, menuType, counts, context}) {
                         <span>Create Ticket</span>
                       </Link>
                     </li>
-
-                    <li className={isActive("/users") ? "active" : ""}>
-                      <Link to="/users">
-                        <FaUser />
-                        <span>Users</span>
+                    <li className={isActive("/team-performance") ? "active" : ""}>
+                      <Link to="/team-performance">
+                        <FaUsers />
+                        <span>Team Performance</span>
                       </Link>
                     </li>
 
-                    <li className={isActive("/notifications") ? "active" : ""}>
-                      <Link to="/notifications">
-                        <FaBell />
-                        <span>Notifications</span>
-                      </Link>
-                    </li>
+                    {role === "admin" && (
+                      <li className={isActive("/users") ? "active" : ""}>
+                        <Link to="/users">
+                          <FaUser />
+                          <span>Users</span>
+                        </Link>
+                      </li>
+                    )}
+
 
                     <li className={isActive("/profile") ? "active" : ""}>
-                      <Link to="/profile">
+                      <Link to={`/users/${user?.ID || user?.id}`}>
                         <FaUser />
                         <span>Profile</span>
                       </Link>
                     </li>
 
-                    <li className={isActive("/settings") ? "active" : ""}>
-                      <Link to="/settings">
-                        <FaCog />
-                        <span>Settings</span>
-                      </Link>
-                    </li>
+                    
                   </>
                 )}
               </>
@@ -266,13 +249,22 @@ function Sidebar({ isOpen, setIsOpen, menuType, counts, context}) {
           {/* FOOTER */}
           <div className="sidebar-footer">
 
-            <Link to="/profile" className="employee-card">
+            <Link to={`/users/${user?.ID || user?.id}`} className="employee-card">
 
-              <div className="avatar">{avatar}</div>
+              <div className="avatar">
+                {user?.image ? (
+                  <img
+                    src={`http://localhost:5050/uploads/${user.image}`}
+                    alt="profile"
+                  />
+                ) : (
+                  <span>{avatar}</span>
+                )}
+              </div>
 
               <div className="employee-info">
                 <h4>{fullName}</h4>
-                <span>{role}</span>
+                <span>{role.toUpperCase()}</span>
                 <p className="online-status">
                   ● {user?.isOnline ? "Online" : "Offline"}
                 </p>

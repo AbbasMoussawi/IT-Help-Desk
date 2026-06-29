@@ -2,13 +2,11 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 
-
 const uploadPath = "uploads/";
 
 if (!fs.existsSync(uploadPath)) {
   fs.mkdirSync(uploadPath);
 }
-
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -16,17 +14,14 @@ const storage = multer.diskStorage({
   },
 
   filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname); // مهم جداً
+    const ext = path.extname(file.originalname);
     const name = Date.now() + "-" + Math.round(Math.random() * 1e9);
 
     cb(null, name + ext);
   },
 });
 
-
 const fileFilter = (req, file, cb) => {
-  const path = require("path");
-
   const allowedExt = [
     ".pdf",
     ".doc",
@@ -34,7 +29,9 @@ const fileFilter = (req, file, cb) => {
     ".jpg",
     ".jpeg",
     ".png",
-    ".webp"
+    ".webp",
+    ".jfif",
+    ".webp",
   ];
 
   const ext = path.extname(file.originalname).toLowerCase();
@@ -52,7 +49,7 @@ const uploadMiddleware = multer({
   storage,
   fileFilter,
   limits: {
-    fileSize: 10 * 1024 * 1024, // 10MB
+    fileSize: 10 * 1024 * 1024,
   },
 });
 

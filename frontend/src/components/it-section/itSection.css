@@ -1,0 +1,498 @@
+.it-dashboard-section {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+  width: 100%;
+  padding: 15px;
+}
+.it-top-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 10px;
+}
+.it-bottom-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 10px;
+}
+.it-assigned-card,
+.it-urgent-card,
+.it-updates-card,
+.it-notifications-card {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid #e8edf5;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+.it-assigned-header,
+.it-urgent-header,
+.it-updates-header,
+.it-notifications-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.it-assigned-header h2,
+.it-urgent-header h2,
+.it-updates-header h2,
+.it-notifications-header h2 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 700;
+}
+.it-assigned-header h2 svg {
+  color: #3b82f6;
+  font-size: 30px;
+}
+.it-urgent-header h2 svg {
+  color: #ef4444;
+  font-size: 30px;
+}
+.it-updates-header h2 svg {
+  color: #8b5cf6;
+  font-size: 30px;
+}
+.it-notifications-header h2 svg {
+  color: #f59e0b;
+  font-size: 30px;
+}
+.it-assigned-view-btn,
+.it-urgent-view-btn,
+.it-updates-view-btn,
+.it-notifications-view-btn,
+.it-assigned-bottom-btn {
+  border: none;
+  text-decoration: none;
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.it-assigned-view-btn:hover,
+.it-urgent-view-btn:hover,
+.it-updates-view-btn:hover,
+.it-notifications-view-btn:hover,
+.it-assigned-bottom-btn:hover {
+  transform: translateY(-1.5px);
+  background: #dbeafe;
+}
+
+
+
+.it-assigned-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.it-ticket-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 12px 18px;
+  border: 1px solid #edf2f7;
+  border-radius: 16px;
+  transition: 0.3s;
+}
+
+.it-ticket-item:hover {
+  background: #eff4f9;
+  transform: translateY(-2px);
+}
+
+.it-ticket-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  background: #eef4ff;
+  color: #2563eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+}
+
+.it-ticket-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.it-ticket-content h4 {
+  margin: 0;
+  font-size: 17px;
+  color: #083782;
+}
+
+.it-ticket-content span {
+  font-size: 14px;
+  color: #7c9ec2;
+  padding-bottom: 5px;
+}
+
+.it-ticket-content p {
+  margin-top: 4px;
+  margin-bottom: 0;
+  font-size: 14px;
+  color: #94a3b8;
+}
+
+.it-ticket-priority {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 700;
+}
+.it-ticket-status {
+  display: block;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  width: fit-content;
+}
+.it-status-open {
+  background: #9ec7fc;
+  color: #0051ff;
+}
+
+.it-status-progress {
+  background: #fce2c0;
+  color: #ea580c;
+}
+
+.it-status-resolved {
+  background: #bdfad2;
+  color: #16a34a;
+}
+
+.it-status-closed {
+  background: #e5e8ec;
+  color: #64748b;
+}
+
+.it-priority-high {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.it-priority-medium {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.it-priority-low {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.it-assigned-bottom-btn {
+  margin-top: 20px;
+  width: 100%;
+}
+
+
+
+.it-urgent-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.it-urgent-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #fff7ed;
+  transition: .3s ease all;
+}
+.it-urgent-item:hover{
+    background: #fcebd7;
+    transform: translateY(-2px);
+}
+
+.it-urgent-icon {
+  color: #ea580c;
+  font-size: 22px;
+}
+
+.it-urgent-content h4 {
+  margin: 0;
+  font-size: 16px;
+}
+
+.it-urgent-content p {
+  margin: 4px 0 0 0;
+  color: #64748b;
+}
+
+.it-urgent-priority {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: #fee2e2;
+  color: #dc2626;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  margin-left: auto;
+}
+.it-urgent-content span {
+  display: block;
+  font-size: 13px;
+  color: #64748b;
+  margin-top: 2px;
+}
+.it-urgent-content p {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.it-ticket-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  margin-top: 4px;
+  color: #64748b;
+}
+
+.it-status-text {
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 8px;
+}
+.it-updates-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.it-update-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #f8fafc;
+  transition: .3s ease all;
+}
+.it-update-item:hover{
+  background: #e6eff9;
+  transform: translateY(-2px);
+}
+
+.it-update-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+.it-update-content {
+  flex: 1;
+}
+
+.it-update-content h4 {
+  margin: 0;
+  font-size: 15px;
+}
+
+.it-update-time {
+  font-size: 13px;
+  color: #64748b;
+}
+.it-ticket-bottom-btn {
+  display: block;
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  padding: 12px;
+  text-decoration: none;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+
+  background: #f8fafc;
+
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  margin-top: auto;
+  transition: 0.3s;
+}
+
+
+.it-ticket-bottom-btn:hover {
+  background: #e1ecfb;
+  transform: translateY(-2px);
+}
+
+.it-update-icon.green { color: #22c55e; }
+.it-update-icon.orange { color: #f97316; }
+.it-update-icon.blue { color: #3b82f6; }
+.it-update-icon.purple { color: #a855f7; }
+.it-update-icon.teal { color: #14b8a6; }
+.it-update-icon.gray { color: #94a3b8; }
+
+.it-notifications-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.it-notification-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #f8fafc;
+  transition: .3s ease all;
+}
+.it-notification-item:hover{
+  background: #e6eff9;
+  transform: translateY(-2px);
+}
+
+.it-notification-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+}
+
+.it-notification-content h4 {
+  margin: 0;
+  font-size: 15px;
+}
+.it-notification-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #222;
+  margin-bottom: 3px;
+}
+
+.it-notification-text {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.3;
+}
+.it-time{
+  font-size: 13px;
+  color: #64748b;
+}
+.it-notification-icon.blue {
+   color: #1677ff; 
+}
+.it-notification-icon.red { 
+  color: #ff4d4f; 
+}
+.it-notification-icon.green { 
+  color: #52c41a; 
+}
+.it-notification-icon.purple { 
+  color: #722ed1; 
+}
+.it-notification-icon.teal { 
+  color: #13c2c2; 
+}
+.it-notification-icon.gray { 
+  color: #999; 
+}
+
+.blue {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.green {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+.orange {
+  background: #ffedd5;
+  color: #ea580c;
+}
+
+.purple {
+  background: #f3e8ff;
+  color: #9333ea;
+}
+
+.red {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+
+@media (max-width: 1100px) {
+  .it-top-grid,
+  .it-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .it-assigned-card,
+  .it-urgent-card,
+  .it-updates-card,
+  .it-notifications-card {
+    padding: 18px;
+  }
+
+  .it-assigned-header h2,
+  .it-urgent-header h2,
+  .it-updates-header h2,
+  .it-notifications-header h2 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .it-ticket-item,
+  .it-update-item,
+  .it-notification-item,
+  .it-urgent-item {
+    padding: 12px;
+  }
+
+  .it-ticket-content h4,
+  .it-update-content h4,
+  .it-notification-content h4,
+  .it-urgent-content h4 {
+    font-size: 14px;
+  }
+}

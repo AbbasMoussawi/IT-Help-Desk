@@ -1,5 +1,5 @@
 const pool = require("../config/db");
-
+const { createNotification, notifyTicketUsers } = require("./notificationController");
 
 const getTicketById = async (req, res) => {
   try {
@@ -35,6 +35,7 @@ const getTicketById = async (req, res) => {
       LEFT JOIN "user" assignee ON t."AssignedToUserId" = assignee."ID"
 
       WHERE t."ID" = $1
+      AND t."IsActive" = TRUE
       `,
       [id]
     );
@@ -56,6 +57,8 @@ const updateTicketStatus = async (req, res) => {
     return res.status(204).end();
   }
   try {
+    const userId = req.user.userId;
+    const io = req.app.get("io");
     const { id } = req.params;
     const { status } = req.body;
 
@@ -79,7 +82,28 @@ const updateTicketStatus = async (req, res) => {
       `,
       [statusId, id]
     );
+    const ticketRes = await pool.query(
+      `
+      SELECT "TicketNumber", "CreatedByUserId"
+      FROM ticket
+      WHERE "ID" = $1
+      `,
+      [id]
+    );
+    const userRes = await pool.query(
+      `SELECT "FullName" FROM "user" WHERE "ID" = $1`,
+      [req.user.userId]
+    );
 
+    const userName = userRes.rows[0].FullName;
+    
+
+    
+    await notifyTicketUsers(req, id, req.user.userId, {
+      title: "Status Updated",
+      message: `${userName} changed status of Ticket ${ticketRes.rows[0].TicketNumber} to ${status}`,
+      type: "status"
+    });
     res.json({ message: "Status updated" });
   } catch (err) {
     console.log("UPDATE STATUS ERROR:", err);
@@ -90,6 +114,8 @@ const updateTicketStatus = async (req, res) => {
 
 const createTicket = async (req, res) => {
   try {
+    const userId = req.user.userId;
+    const io = req.app.get("io");
     console.log("BODY =", req.body);
 
     const {
@@ -101,7 +127,7 @@ const createTicket = async (req, res) => {
       department
     } = req.body;
 
-    const userId = req.user.userId;
+    
 
     const categoryId = parseInt(category);
     const priorityId = parseInt(priority);
@@ -172,24 +198,29 @@ const createTicket = async (req, res) => {
     );
 
     const ticket = result.rows[0];
+    const userRes = await pool.query(
+      `SELECT "FullName" FROM "user" WHERE "ID" = $1`,
+      [req.user.userId]
+    );
+
+    const userName = userRes.rows[0].FullName;
+    await notifyTicketUsers(req, ticket.ID, req.user.userId, {
+      title: "New Ticket Created",
+      message: `${userName} created Ticket ${ticket.TicketNumber}`,
+      type: "create ticket"
+    });
 
     await pool.query(
       `
       INSERT INTO ticket_activity
-      (
-        "TicketId",
-        "UserId",
-        "Action",
-        "NewValue",
-        "CreatedAt"
-      )
+      ("TicketId","UserId","Action","NewValue","CreatedAt")
       VALUES ($1,$2,$3,$4,NOW())
       `,
       [
         ticket.ID,
-        userId,
-        'Created Ticket',
-        ticket.Title
+        req.user.userId,
+        "Ticket Created",
+        "Ticket created"
       ]
     );
 
@@ -387,6 +418,7 @@ const getTicketForEdit = async (req, res) => {
       FROM ticket t
       LEFT JOIN attachment a ON a."TicketId" = t."ID"
       WHERE t."ID" = $1
+      AND t."IsActive" = TRUE
     `,[id]);
 
     if(result.rows.length === 0){
@@ -402,7 +434,7 @@ const getTicketForEdit = async (req, res) => {
 
 const updateTicket = async (req,res) => {
   try {
-
+    const io = req.app.get("io");
     const { id } = req.params;
     const role = req.user.role?.toLowerCase();
 
@@ -419,6 +451,16 @@ const updateTicket = async (req,res) => {
       category,
       priority
     } = req.body;
+    const oldTicketRes = await pool.query(
+      `
+      SELECT "AssignedToUserId"
+      FROM ticket
+      WHERE "ID" = $1
+      `,
+      [id]
+    );
+
+    const oldAssignedTo = oldTicketRes.rows[0].AssignedToUserId;
 
 
     await pool.query(`
@@ -441,22 +483,102 @@ const updateTicket = async (req,res) => {
       priority || null,
       id
     ]);
-    await pool.query(
+    const ticketRes = await pool.query(
       `
-      INSERT INTO ticket_activity
-      (
-        "TicketId",
-        "UserId",
-        "Action"
-      )
-      VALUES ($1,$2,$3)
+      SELECT
+        "TicketNumber",
+        "CreatedByUserId",
+        "AssignedToUserId"
+      FROM ticket
+      WHERE "ID" = $1
       `,
-      [
-        id,
-        req.user.userId,
-        "Ticket Updated"
-      ]
+      [id]
     );
+    const userId = req.user.userId;
+
+
+    if (status) {
+      const statusNameRes = await pool.query(
+        `SELECT "StatusName" FROM status WHERE "ID" = $1`,
+        [status]
+      );
+
+      const statusName = statusNameRes.rows[0]?.StatusName;
+      const userRes = await pool.query(
+        `SELECT "FullName" FROM "user" WHERE "ID" = $1`,
+        [req.user.userId]
+      );
+
+      const userName = userRes.rows[0].FullName;
+      
+      await notifyTicketUsers(req, id, req.user.userId, {
+        title: "Ticket Updated",
+        message: `${userName} updated ticket ${ticketRes.rows[0].TicketNumber} to ${statusName} `,
+        type: "status"
+      });
+
+      await pool.query(
+        `
+        INSERT INTO ticket_activity
+        ("TicketId","UserId","Action","NewValue","CreatedAt")
+        VALUES ($1,$2,$3,$4,NOW())
+        `,
+        [
+          id,
+          userId,
+          "Status Changed",
+          `Status changed to ${statusName}`
+        ]
+      );
+    }
+
+    
+    if (assignedTo && Number(assignedTo) !== Number(oldAssignedTo))  {
+      const userRes = await pool.query(
+        `SELECT "FullName" FROM "user" WHERE "ID" = $1`,
+        [assignedTo]
+      );
+
+      const name = userRes.rows[0]?.FullName;
+      await createNotification(req, {
+        userId: assignedTo,
+        title: "Ticket Assigned",
+        message: `Ticket ${ticketRes.rows[0].TicketNumber} has been assigned to you`,
+        type: "assigned ticket"
+      });
+      
+
+      await pool.query(
+        `
+        INSERT INTO ticket_activity
+        ("TicketId","UserId","Action","NewValue","CreatedAt")
+        VALUES ($1,$2,$3,$4,NOW())
+        `,
+        [
+          id,
+          userId,
+          "Assigned",
+          `Assigned ticket to ${name}`
+        ]
+      );
+    }
+
+    
+    if (!status && !assignedTo) {
+      await pool.query(
+        `
+        INSERT INTO ticket_activity
+        ("TicketId","UserId","Action","NewValue","CreatedAt")
+        VALUES ($1,$2,$3,$4,NOW())
+        `,
+        [
+          id,
+          userId,
+          "Ticket Updated",
+          "General ticket information updated"
+        ]
+      );
+    }
 
     if (req.file) {
       await pool.query(
@@ -480,7 +602,28 @@ const updateTicket = async (req,res) => {
           req.file.size
         ]
       );
+      if (ticketRes.rows[0].CreatedByUserId !== userId) {
+        await createNotification(req, {
+          userId: ticketRes.rows[0].CreatedByUserId,
+          title: "New Attachment",
+          message: `New file uploaded to Ticket ${ticketRes.rows[0].TicketNumber}`,
+          type: "attachment"
+        });
+      }
+
+      if (
+        ticketRes.rows[0].AssignedToUserId &&
+        ticketRes.rows[0].AssignedToUserId !== userId
+      ) {
+        await createNotification(req, {
+          userId: ticketRes.rows[0].AssignedToUserId,
+          title: "New Attachment",
+          message: `New file uploaded to Ticket ${ticketRes.rows[0].TicketNumber}`,
+          type: "attachment"
+        });
+      }
     }
+    
 
     res.json({
       message:"Ticket updated"

@@ -23,10 +23,12 @@ const login = async (req, res) => {
         u."PasswordHash",
         u."IsActive",
         u."IsOnline",
+        u."Image",
         r."RoleName"
       FROM "user" u
       INNER JOIN role r ON u."RoleId" = r."ID"
       WHERE u."Email" = $1
+      AND u."IsActive" = TRUE
       `,
       [email]
     );
@@ -81,6 +83,7 @@ const login = async (req, res) => {
         email: user.Email,
         role: user.RoleName,
         isOnline: true,
+        image: user.Image
       },
     });
 
@@ -102,6 +105,7 @@ const getMe = async (req, res) => {
         u."Email",
         u."IsActive",
         u."IsOnline",
+        u."Image",
         r."RoleName"
       FROM "user" u
       INNER JOIN role r ON u."RoleId" = r."ID"
@@ -126,6 +130,7 @@ const getMe = async (req, res) => {
         role: user.RoleName || "No role",
         isActive: user.IsActive,
         isOnline: user.IsOnline,
+        image: user.Image
       },
     });
 

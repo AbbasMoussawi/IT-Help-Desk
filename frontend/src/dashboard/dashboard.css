@@ -1,40 +1,19 @@
-.dashboard-container {
-  height: 100vh;
+.dashboard-layout {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(to bottom, #8fa9c9, #dfe5ee);
-  font-family: "Inter", sans-serif;
+  min-height: 100vh;
+  background: #f5f7fb;
 }
 
-.dashboard-card {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 40px 60px;
-  border-radius: 12px;
-  text-align: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  animation: fadeIn 0.4s ease-in-out;
+.dashboard-content {
+  flex: 1;
+  margin-left: 240px;
+  overflow-x: hidden;
 }
-
-.welcome-text {
-  font-size: 28px;
-  color: #ffffff;
-  margin-bottom: 10px;
-}
-
-.user-name {
-  font-size: 18px;
-  color: #2654c8;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
+@media (max-width: 1000px){
+  .dashboard-content{
+    margin-left: 0;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+}
+@media (max-width: 768px) {
+  
 }

@@ -1,0 +1,125 @@
+.create-user-page {
+  padding: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 70px);
+  background: #f5f7fb;
+}
+.form-card {
+  width: 100%;
+  max-width: 500px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.form-card h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  font-weight: 600;
+  color: #222;
+}
+
+.user-input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #ddd;
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background: #fff;
+  transition: .2s;
+}
+
+.user-input-group input,
+.user-input-group select {
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 14px;
+  transition: .3s;
+}
+.user-input-group:focus-within{
+    border: 1px solid #1e4fd6;
+    padding: 15px 14px;
+}
+.user-input-group input:focus-within::placeholder{
+    color: #bfbfbf;
+    transition: .3s ease all;
+}
+.user-input-group select:hover{
+    cursor: pointer;
+}
+
+
+.user-input-group svg {
+  color: #979696;
+  min-width: 18px;
+  transition: .3s ease all;
+}
+.user-input-group:focus-within svg{
+    color: #1e4fd6;
+}
+.user-input-group input:disabled {
+  background: #f5f7fb;
+  color: #474a50;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.user-input-group select:disabled {
+  background: #f5f7fb;
+  color: #6b7280;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.user-submit-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  background: #2563eb;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  
+  transition: 0.3s;
+}
+
+.user-submit-btn:hover {
+  background: #123eb8;
+  transform: translateY(-2px);
+}
+
+.success-msg {
+  color: rgb(2, 186, 2);
+  margin-top: 15px;
+  font-weight: 500;
+}
+
+.error-msg {
+  color: rgb(254, 39, 39);
+  margin-top: 15px;
+  font-weight: 500;
+}
+
+@media (max-width: 1000px) {
+  .form-card {
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 600px) {
+  .create-user-page {
+    padding: 15px;
+  }
+
+  .form-card {
+    padding: 20px;
+  }
+}
