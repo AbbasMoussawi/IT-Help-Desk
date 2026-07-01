@@ -1,0 +1,15 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  
+  <!-- Background -->
+  <rect width="512" height="512" rx="120" fill="#0B3D91"></rect>
+
+  <!-- Headset -->
+  <path d="M256 120C176 120 112 184 112 264V320C112 338 126 352 144 352H168V272H144C144 212 196 160 256 160C316 160 368 212 368 272H344V352H368C386 352 400 338 400 320V264C400 184 336 120 256 120Z" fill="white"></path>
+
+  <!-- Headset mic -->
+  <rect x="330" y="280" width="20" height="80" rx="10" fill="white"></rect>
+  
+  <!-- Bottom subtle base -->
+  <rect x="200" y="360" width="112" height="18" rx="9" fill="white"></rect>
+
+</svg>
