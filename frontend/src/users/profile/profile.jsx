@@ -2,10 +2,20 @@ import "./profile.css";
 import Sidebar from "../../components/sidebar/sidebar";
 import TopBar from "../../components/topbar/topbar";
 import { useEffect, useState } from "react";
-import { FiUser, FiMail, FiEdit, FiLock, FiMoon, FiSun, FiTrash2 } from "react-icons/fi";
+import {
+  FiUser,
+  FiMail,
+  FiEdit,
+  FiLock,
+  FiMoon,
+  FiSun,
+  FiTrash2,
+  FiShield,
+  FiUserCheck
+} from "react-icons/fi";
 import { FaPenToSquare } from "react-icons/fa6";
 import { useParams } from "react-router-dom";
-import { FaUserCircle } from "react-icons/fa";
+import { FaUserCircle, FaHeadset } from "react-icons/fa";
 
 
 
@@ -23,6 +33,24 @@ function Profile() {
   const showMessage = (text, type = "success") => {
     setMessage(text);
     setMessageType(type);
+  };
+  const getRoleIcon = (role) => {
+    switch (role) {
+        case "Admin":
+        return <FiShield />;
+
+        case "Manager":
+        return <FiUserCheck />;
+
+        case "IT Support":
+        return <FaHeadset />;
+
+        case "Employee":
+        return <FiUser />;
+
+        default:
+        return <FiUser />;
+    }
   };
 
   const [form, setForm] = useState({
@@ -273,7 +301,10 @@ function Profile() {
                     </div>
 
                 <div className="hero-info">
-                    <span className="admin-badge">{user.role}</span>
+                    <span className="admin-badge">
+                        {getRoleIcon(user.role)}
+                        <span>{user.role}</span>
+                    </span>
                     <h1>{user.fullName}</h1>
 
                     <p>

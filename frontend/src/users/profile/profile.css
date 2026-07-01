@@ -171,14 +171,19 @@
 }
 
 .admin-badge {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   padding: 6px 14px;
   border-radius: 999px;
   background: #eef2ff;
   color: #4338ca;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 600;
   margin-bottom: 14px;
+}
+.admin-badge svg {
+  font-size: 15px;
 }
 
 .hero-info h1 {
