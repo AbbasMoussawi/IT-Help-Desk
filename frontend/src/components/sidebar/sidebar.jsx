@@ -207,6 +207,12 @@ function Sidebar({ isOpen, setIsOpen, menuType, counts, context}) {
                         <span>Tickets</span>
                       </Link>
                     </li>
+                    <li className={isActive("/my-tickets") ? "active" : ""}>
+                      <Link to="/my-tickets">
+                        <FaTicketAlt />
+                        <span>My Tickets</span>
+                      </Link>
+                    </li>
 
                     <li className={isActive("/create-ticket") ? "active" : ""}>
                       <Link to="/create-ticket">
