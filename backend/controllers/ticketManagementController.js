@@ -94,21 +94,13 @@ const getTicketFilters = async (req, res) => {
 
 const deleteTicket = async (req, res) => {
   try {
-    const io = req.app.get("io");
     const { id } = req.params;
     const role = req.user.role;
 
-    if (role !== "admin") {
+    if (role !== "Admin") {
       return res.status(403).json({ message: "Not allowed" });
     }
-    await pool.query(
-      `
-      UPDATE ticket
-      SET "IsActive" = FALSE
-      WHERE "ID" = $1
-      `,
-      [id]
-    );
+
     const ticketRes = await pool.query(
       `
       SELECT "TicketNumber", "CreatedByUserId"
@@ -117,32 +109,49 @@ const deleteTicket = async (req, res) => {
       `,
       [id]
     );
-    const userRes = await pool.query(
-      `SELECT "FullName" FROM "user" WHERE "ID" = $1`,
-      [userId]
+
+    if(ticketRes.rows.length === 0){
+      return res.status(404).json({
+        message:"Ticket not found"
+      });
+    }
+
+
+    await pool.query(
+      `
+      UPDATE ticket
+      SET "IsActive" = FALSE
+      WHERE "ID" = $1
+      `,
+      [id]
     );
 
-    const userName = userRes.rows[0].FullName;
-    await createNotification(req, {
-      userId: ticketRes.rows[0].CreatedByUserId,
-      title: "Ticket Deleted",
-      message: `${userName} delete ticket ${ticketRes.rows[0].TicketNumber}`,
-      type: "warning"
-    });
+
+    const userRes = await pool.query(
+      `SELECT "FullName" FROM "user" WHERE "ID" = $1`,
+      [req.user.userId]
+    );
+
+
+    const userName = userRes.rows[0]?.FullName || "Admin";
+
 
     await notifyTicketUsers(req, id, req.user.userId, {
       title: "Ticket Deleted",
-      message: `${userName} delete ticket ${ticketRes.rows[0].TicketNumber}`,
+      message: `${userName} deleted ticket ${ticketRes.rows[0].TicketNumber}`,
       type: "warning"
     });
 
+
     res.json({
-      message: "Ticket deleted successfully",
+      message:"Ticket deleted successfully"
     });
 
-  } catch (err) {
+
+  } catch(err){
+    console.log(err);
     res.status(500).json({
-      message: err.message,
+      message:err.message
     });
   }
 };

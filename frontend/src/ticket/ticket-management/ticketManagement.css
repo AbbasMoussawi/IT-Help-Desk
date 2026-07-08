@@ -433,7 +433,25 @@
   background: #f59494;
   transform: scale(1.1);
 }
+.deleting-row {
+  animation: deleteRow 0.3s ease forwards;
+}
 
+
+@keyframes deleteRow {
+
+  from {
+    opacity:1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity:0;
+    transform: translateX(40px);
+    height:0;
+  }
+
+}
 .ticket-management-table tbody tr:hover {
   background: #d1e7fc;
   transition: .3s ease all;

@@ -46,6 +46,7 @@ function TicketManagement() {
   const params = new URLSearchParams(location.search);
   const categoryFromUrl = params.get("category") || "All";
   const [category, setCategory] = useState(categoryFromUrl);
+  const [deletingId, setDeletingId] = useState(null);
   
 
   useEffect(() => {
@@ -116,6 +117,7 @@ function TicketManagement() {
         );
 
         const data = await res.json();
+        
 
         if (res.ok) {
           setTicketsData(data.tickets || []);
@@ -178,21 +180,37 @@ function TicketManagement() {
   }, []);
 
   const handleDelete = async (id) => {
-    const token = localStorage.getItem("token");
 
-    const res = await fetch(
-      `http://localhost:5050/api/ticket-management/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    setDeletingId(id);
+
+    setTimeout(async () => {
+
+      try {
+        const token = localStorage.getItem("token");
+
+        const res = await fetch(
+          `http://localhost:5050/api/ticket-management/${id}`,
+          {
+            method: "DELETE",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+
+        if(res.ok){
+          setTicketsData(prev =>
+            prev.filter(ticket => ticket.ID !== id)
+          );
+        }
+
+      } catch(err){
+        console.log(err);
       }
-    );
 
-    if (res.ok) {
-      fetchTickets();
-    }
+    },300);
+
   };
 
 
@@ -381,7 +399,9 @@ function TicketManagement() {
                 )}
 
                 {!loading && filteredTickets.map((ticket) => (
-                  <tr key={ticket.TicketNumber}>
+                  <tr key={ticket.ID}
+                    className={deletingId === ticket.ID ? "deleting-row" : ""}
+                  >
 
                     <td className="ticket-management-number">{ticket.TicketNumber}</td>
 
